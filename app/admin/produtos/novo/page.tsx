@@ -414,6 +414,18 @@ export default function NewProductPage() {
                     ),
                   )}
                 </select>
+
+                {categories.length === 0 && (
+                  <p className="mt-2 text-sm text-neutral-500">
+                    Nenhuma categoria ativa cadastrada.{" "}
+                    <Link
+                      href="/admin/categorias"
+                      className="font-medium text-neutral-900 underline"
+                    >
+                      Criar categoria
+                    </Link>
+                  </p>
+                )}
               </div>
 
               <div>
