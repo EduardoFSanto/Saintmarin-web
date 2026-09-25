@@ -23,6 +23,14 @@ export type Product = {
   } | null;
 };
 
+export type ProductImage = {
+  id: string;
+  productId: string;
+  imageUrl: string;
+  position: number;
+  createdAt: string;
+};
+
 export type ProductVariant = {
   id: string;
   productId: string;
@@ -260,6 +268,34 @@ export async function logout(): Promise<void> {
       "Não foi possível encerrar a sessão.",
     );
   }
+}
+
+
+export async function getProductImages(productId: string): Promise<ProductImage[]> {
+  const response = await fetch(`${API_URL}/products/${productId}/images`, { cache: "no-store", credentials: "include" });
+  if (!response.ok) throw new Error("Não foi possível carregar as fotos.");
+  const result = (await response.json()) as ApiResponse<ProductImage[]>;
+  return result.data;
+}
+
+export async function addProductImage(productId: string, imageUrl: string, position?: number): Promise<ProductImage> {
+  const response = await fetch(`${API_URL}/products/${productId}/images`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ imageUrl, position }),
+  });
+  const result = await response.json().catch(() => null);
+  if (!response.ok) throw new Error(result?.error?.message ?? "Não foi possível adicionar a foto.");
+  return (result as ApiResponse<ProductImage>).data;
+}
+
+export async function deleteProductImage(productId: string, imageId: string): Promise<void> {
+  const response = await fetch(`${API_URL}/products/${productId}/images/${imageId}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+  if (!response.ok) throw new Error("Não foi possível remover a foto.");
 }
 
 export type CreateProductInput = {
