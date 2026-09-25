@@ -66,12 +66,12 @@ export default function AdminProductsPage() {
             </h1>
           </div>
 
-          <button
-            type="button"
+          <Link
+            href="/admin/produtos/novo"
             className="rounded-lg bg-neutral-950 px-5 py-3 text-sm font-medium text-white hover:bg-neutral-800"
           >
             Novo produto
-          </button>
+          </Link>
         </div>
       </header>
 
@@ -85,6 +85,13 @@ export default function AdminProductsPage() {
             <p className="mt-2 text-sm text-neutral-500">
               Comece cadastrando o primeiro produto da Saint Marin.
             </p>
+
+            <Link
+              href="/admin/produtos/novo"
+              className="mt-6 inline-flex rounded-lg bg-neutral-950 px-5 py-3 text-sm font-medium text-white hover:bg-neutral-800"
+            >
+              Cadastrar produto
+            </Link>
           </div>
         ) : (
           <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
