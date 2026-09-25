@@ -5,14 +5,18 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 import {
+  addProductImage,
+  deleteProductImage,
   getCategories,
   getCurrentUser,
+  getProductImages,
   getProductVariants,
   getProducts,
   updateProduct,
   updateProductVariant,
   type Category,
   type Product,
+  type ProductImage,
   type ProductVariant,
 } from "../../../../lib/api";
 import { uploadImageToCloudinary } from "../../../../lib/cloudinary";
@@ -35,6 +39,8 @@ export default function EditProductPage() {
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [images, setImages] = useState<ProductImage[]>([]);
+  const [addingImages, setAddingImages] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -53,13 +59,15 @@ export default function EditProductPage() {
         const current = products.find((item) => item.id === id);
         if (!current) throw new Error("Produto não encontrado.");
 
-        const [categoryData, variantData] = await Promise.all([
+        const [categoryData, variantData, imageData] = await Promise.all([
           getCategories(),
           getProductVariants(id),
+          getProductImages(id),
         ]);
 
         setProduct(current);
         setCategories(categoryData.filter((item) => item.active));
+        setImages(imageData);
         setName(current.name);
         setSlug(current.slug);
         setDescription(current.description ?? "");
@@ -107,6 +115,41 @@ export default function EditProductPage() {
     setError("");
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
+  }
+
+  async function handleAddImages(event: ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(event.target.files ?? []);
+    if (!files.length) return;
+    setAddingImages(true);
+    setError("");
+    try {
+      for (const file of files) {
+        if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+          throw new Error("Use apenas JPG, PNG ou WEBP.");
+        }
+        if (file.size > 5 * 1024 * 1024) {
+          throw new Error("Cada imagem deve ter no máximo 5 MB.");
+        }
+        const url = await uploadImageToCloudinary(file);
+        const image = await addProductImage(id, url);
+        setImages((current) => [...current, image]);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Não foi possível adicionar as fotos.");
+    } finally {
+      setAddingImages(false);
+      event.target.value = "";
+    }
+  }
+
+  async function handleDeleteImage(image: ProductImage) {
+    if (!window.confirm("Remover esta foto do produto?")) return;
+    try {
+      await deleteProductImage(id, image.id);
+      setImages((current) => current.filter((item) => item.id !== image.id));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Não foi possível remover a foto.");
+    }
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -172,7 +215,26 @@ export default function EditProductPage() {
       <section className="mx-auto max-w-4xl px-6 py-10">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="rounded-2xl bg-white p-6 shadow-sm">
-            <h2 className="text-lg font-semibold">Imagem</h2>
+            <h2 className="text-lg font-semibold">Fotos do produto</h2>
+            <p className="mt-1 text-sm text-neutral-500">Adicione várias fotos. A primeira imagem antiga continua como capa.</p>
+            <div className="mt-5 grid grid-cols-2 gap-4 md:grid-cols-4">
+              {images.map((image) => (
+                <div key={image.id} className="relative overflow-hidden rounded-xl border bg-neutral-50">
+                  <img src={image.imageUrl} alt={name} className="aspect-[4/5] w-full object-cover" />
+                  <button type="button" onClick={() => handleDeleteImage(image)} className="absolute right-2 top-2 rounded-md bg-white/90 px-2 py-1 text-xs font-medium text-red-700 shadow">
+                    Remover
+                  </button>
+                </div>
+              ))}
+            </div>
+            <label className="mt-5 flex cursor-pointer items-center justify-center rounded-lg border px-5 py-3 text-sm font-medium hover:bg-neutral-50">
+              {addingImages ? "Enviando..." : "Adicionar fotos"}
+              <input type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={handleAddImages} disabled={addingImages} className="hidden" />
+            </label>
+          </div>
+
+          <div className="rounded-2xl bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-semibold">Imagem de capa</h2>
             {imagePreview ? (
               <img src={imagePreview} alt={name} className="mt-5 h-72 w-full rounded-xl border object-contain bg-neutral-50" />
             ) : (
