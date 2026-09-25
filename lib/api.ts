@@ -40,6 +40,44 @@ export type Category = {
   createdAt: string;
 };
 
+export type OrderSummary = {
+  id: string;
+  status: string;
+  subtotalInCents: number;
+  shippingInCents: number;
+  totalInCents: number;
+  shippingCep: string;
+  shippingStreet: string;
+  shippingNumber: string;
+  shippingComplement: string | null;
+  shippingNeighborhood: string;
+  shippingCity: string;
+  shippingState: string;
+  createdAt: string;
+  updatedAt: string;
+  customer: {
+    id: string;
+    name: string;
+    email: string;
+    phone: string | null;
+  };
+};
+
+export type Order = OrderSummary & {
+  items: Array<{
+    id: string;
+    productVariantId: string;
+    productName: string;
+    sku: string;
+    size: string;
+    color: string;
+    unitPriceInCents: number;
+    quantity: number;
+    totalInCents: number;
+    createdAt: string;
+  }>;
+};
+
 export type AuthUser = {
   id: string;
   name: string;
@@ -50,6 +88,46 @@ export type AuthUser = {
 type ApiResponse<T> = {
   data: T;
 };
+
+export async function getOrders(): Promise<OrderSummary[]> {
+  const response = await fetch(
+    `${API_URL}/orders`,
+    {
+      cache: "no-store",
+      credentials: "include",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Não foi possível carregar os pedidos.");
+  }
+
+  const result =
+    (await response.json()) as ApiResponse<OrderSummary[]>;
+
+  return result.data;
+}
+
+export async function getOrderById(
+  id: string,
+): Promise<Order> {
+  const response = await fetch(
+    `${API_URL}/orders/${id}`,
+    {
+      cache: "no-store",
+      credentials: "include",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Não foi possível carregar o pedido.");
+  }
+
+  const result =
+    (await response.json()) as ApiResponse<Order>;
+
+  return result.data;
+}
 
 export async function getProducts(): Promise<Product[]> {
   const response = await fetch(
