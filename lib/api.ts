@@ -270,3 +270,42 @@ export async function createProductVariant(
 
   return result.data;
 }
+
+export type CreateCategoryInput = {
+  name: string;
+  slug: string;
+  active?: boolean;
+};
+
+export async function createCategory(
+  input: CreateCategoryInput,
+): Promise<Category> {
+  const response = await fetch(
+    `${API_URL}/categories`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(input),
+    },
+  );
+
+  if (!response.ok) {
+    const result =
+      await response.json().catch(
+        () => null,
+      );
+
+    throw new Error(
+      result?.error?.message ??
+        "Não foi possível criar a categoria.",
+    );
+  }
+
+  const result =
+    (await response.json()) as ApiResponse<Category>;
+
+  return result.data;
+}
