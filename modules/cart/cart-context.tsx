@@ -34,6 +34,7 @@ type CartContextValue = {
   totalItems: number;
   totalInCents: number;
   addItem: (input: AddToCartInput) => void;
+  buyNow: (input: AddToCartInput) => void;
   removeItem: (variantId: string) => void;
   updateQuantity: (
     variantId: string,
@@ -98,6 +99,25 @@ export function CartProvider({
     });
   }
 
+  function buyNow({
+    product,
+    variant,
+    quantity = 1,
+  }: AddToCartInput) {
+    setItems([
+      {
+        productId: product.id,
+        variantId: variant.id,
+        name: product.name,
+        slug: product.slug,
+        color: variant.color,
+        size: variant.size,
+        priceInCents: variant.priceInCents,
+        quantity,
+      },
+    ]);
+  }
+
   function removeItem(variantId: string) {
     setItems((currentItems) =>
       currentItems.filter(
@@ -160,6 +180,7 @@ export function CartProvider({
       totalItems,
       totalInCents,
       addItem,
+      buyNow,
       removeItem,
       updateQuantity,
       clearCart,
