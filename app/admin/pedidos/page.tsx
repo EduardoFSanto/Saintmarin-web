@@ -29,8 +29,7 @@ function statusLabel(status: string) {
 function whatsappUrl(order: Order) {
   const items = order.items.map((item) =>
     "• " + item.productName + " — " + item.color + " / " + item.size + " — " + item.quantity + "x — " + formatPrice(item.totalInCents),
-  ).join("
-");
+  ).join("\n");
 
   const address = [
     order.shippingStreet + ", " + order.shippingNumber,
@@ -38,8 +37,7 @@ function whatsappUrl(order: Order) {
     order.shippingNeighborhood,
     order.shippingCity + " - " + order.shippingState,
     "CEP " + order.shippingCep,
-  ].filter(Boolean).join("
-");
+  ].filter(Boolean).join("\n");
 
   const message = [
     "NOVO PEDIDO — SAINT MARIN",
@@ -63,8 +61,7 @@ function whatsappUrl(order: Order) {
     "TOTAL: " + formatPrice(order.totalInCents),
     "",
     "Status: " + statusLabel(order.status),
-  ].filter(Boolean).join("
-");
+  ].filter(Boolean).join("\n");
 
   return "https://wa.me/5511999575756?text=" + encodeURIComponent(message);
 }
