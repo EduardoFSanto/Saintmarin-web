@@ -671,7 +671,7 @@ export default function CheckoutPage() {
         <div className="mx-auto max-w-[900px]">
           <Link
             href="/carrinho"
-            className="inline-flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] text-black/45 transition-colors hover:text-black"
+            className="inline-flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] text-black/60 transition-colors hover:text-black"
           >
             <ArrowLeft
               size={14}
@@ -682,7 +682,7 @@ export default function CheckoutPage() {
           </Link>
 
           <div className="flex min-h-[55vh] flex-col items-center justify-center text-center">
-            <p className="text-[9px] uppercase tracking-[0.45em] text-black/40">
+            <p className="text-[9px] uppercase tracking-[0.45em] text-black/55">
               Checkout
             </p>
 
@@ -690,7 +690,7 @@ export default function CheckoutPage() {
               Seu carrinho está vazio.
             </h1>
 
-            <p className="mt-5 max-w-md text-sm leading-7 text-black/45">
+            <p className="mt-5 max-w-md text-sm leading-7 text-black/60">
               Adicione pelo menos um produto antes de continuar para o checkout.
             </p>
 
@@ -712,7 +712,7 @@ export default function CheckoutPage() {
         <div className="border-b border-black/10 pb-7">
           <Link
             href="/carrinho"
-            className="inline-flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] text-black/45 transition-colors hover:text-black"
+            className="inline-flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] text-black/60 transition-colors hover:text-black"
           >
             <ArrowLeft
               size={14}
@@ -723,7 +723,7 @@ export default function CheckoutPage() {
           </Link>
 
           <div className="mt-8">
-            <p className="text-[9px] uppercase tracking-[0.4em] text-black/40">
+            <p className="text-[9px] uppercase tracking-[0.4em] text-black/55">
               Saint Marin
             </p>
 
@@ -745,7 +745,7 @@ export default function CheckoutPage() {
 
               <div>
                 <div className="border-b border-black/10 pb-4">
-                  <p className="text-[9px] uppercase tracking-[0.3em] text-black/40">
+                  <p className="text-[9px] uppercase tracking-[0.3em] text-black/55">
                     01 · Seus dados
                   </p>
                 </div>
@@ -754,7 +754,7 @@ export default function CheckoutPage() {
                   <div>
                     <label
                       htmlFor="name"
-                      className="text-[9px] uppercase tracking-[0.3em] text-black/50"
+                      className="text-[9px] uppercase tracking-[0.3em] text-black/70"
                     >
                       Nome completo
                     </label>
@@ -780,7 +780,7 @@ export default function CheckoutPage() {
                         150
                       }
                       placeholder="Seu nome completo"
-                      className="mt-3 w-full border-b border-black/15 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-black/25 focus:border-black"
+                      className="mt-3 w-full border-b border-black/30 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-black/55 focus:border-black"
                     />
                   </div>
 
@@ -788,7 +788,7 @@ export default function CheckoutPage() {
                     <div>
                       <label
                         htmlFor="email"
-                        className="text-[9px] uppercase tracking-[0.3em] text-black/50"
+                        className="text-[9px] uppercase tracking-[0.3em] text-black/70"
                       >
                         E-mail
                       </label>
@@ -811,14 +811,14 @@ export default function CheckoutPage() {
                           255
                         }
                         placeholder="seu@email.com"
-                        className="mt-3 w-full border-b border-black/15 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-black/25 focus:border-black"
+                        className="mt-3 w-full border-b border-black/30 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-black/55 focus:border-black"
                       />
                     </div>
 
                     <div>
                       <label
                         htmlFor="phone"
-                        className="text-[9px] uppercase tracking-[0.3em] text-black/50"
+                        className="text-[9px] uppercase tracking-[0.3em] text-black/70"
                       >
                         Telefone
                         <span className="ml-2 text-black/25">
@@ -843,7 +843,7 @@ export default function CheckoutPage() {
                           30
                         }
                         placeholder="(24) 99999-9999"
-                        className="mt-3 w-full border-b border-black/15 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-black/25 focus:border-black"
+                        className="mt-3 w-full border-b border-black/30 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-black/55 focus:border-black"
                       />
                     </div>
                   </div>
@@ -854,7 +854,7 @@ export default function CheckoutPage() {
 
               <div>
                 <div className="border-b border-black/10 pb-4">
-                  <p className="text-[9px] uppercase tracking-[0.3em] text-black/40">
+                  <p className="text-[9px] uppercase tracking-[0.3em] text-black/55">
                     02 · Endereço de entrega
                   </p>
                 </div>
@@ -863,7 +863,7 @@ export default function CheckoutPage() {
                   <div>
                     <label
                       htmlFor="cep"
-                      className="text-[9px] uppercase tracking-[0.3em] text-black/50"
+                      className="text-[9px] uppercase tracking-[0.3em] text-black/70"
                     >
                       CEP
                     </label>
@@ -899,7 +899,7 @@ export default function CheckoutPage() {
                         }}
                         required
                         placeholder="00000-000"
-                        className="min-w-0 flex-1 border-b border-black/15 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-black/25 focus:border-black"
+                        className="min-w-0 flex-1 border-b border-black/30 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-black/55 focus:border-black"
                       />
 
                       <button
@@ -931,7 +931,7 @@ export default function CheckoutPage() {
                     </div>
 
                     {cepFound && (
-                      <p className="mt-3 flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] text-black/45">
+                      <p className="mt-3 flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] text-black/60">
                         <Check
                           size={12}
                         />
@@ -944,7 +944,7 @@ export default function CheckoutPage() {
                   <div>
                     <label
                       htmlFor="street"
-                      className="text-[9px] uppercase tracking-[0.3em] text-black/50"
+                      className="text-[9px] uppercase tracking-[0.3em] text-black/70"
                     >
                       Rua
                     </label>
@@ -967,7 +967,7 @@ export default function CheckoutPage() {
                         200
                       }
                       placeholder="Rua / Avenida"
-                      className="mt-3 w-full border-b border-black/15 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-black/25 focus:border-black"
+                      className="mt-3 w-full border-b border-black/30 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-black/55 focus:border-black"
                     />
                   </div>
 
@@ -975,7 +975,7 @@ export default function CheckoutPage() {
                     <div>
                       <label
                         htmlFor="number"
-                        className="text-[9px] uppercase tracking-[0.3em] text-black/50"
+                        className="text-[9px] uppercase tracking-[0.3em] text-black/70"
                       >
                         Número
                       </label>
@@ -997,14 +997,14 @@ export default function CheckoutPage() {
                           20
                         }
                         placeholder="123"
-                        className="mt-3 w-full border-b border-black/15 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-black/25 focus:border-black"
+                        className="mt-3 w-full border-b border-black/30 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-black/55 focus:border-black"
                       />
                     </div>
 
                     <div>
                       <label
                         htmlFor="complement"
-                        className="text-[9px] uppercase tracking-[0.3em] text-black/50"
+                        className="text-[9px] uppercase tracking-[0.3em] text-black/70"
                       >
                         Complemento
                         <span className="ml-2 text-black/25">
@@ -1030,7 +1030,7 @@ export default function CheckoutPage() {
                           100
                         }
                         placeholder="Apartamento, bloco..."
-                        className="mt-3 w-full border-b border-black/15 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-black/25 focus:border-black"
+                        className="mt-3 w-full border-b border-black/30 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-black/55 focus:border-black"
                       />
                     </div>
                   </div>
@@ -1038,7 +1038,7 @@ export default function CheckoutPage() {
                   <div>
                     <label
                       htmlFor="neighborhood"
-                      className="text-[9px] uppercase tracking-[0.3em] text-black/50"
+                      className="text-[9px] uppercase tracking-[0.3em] text-black/70"
                     >
                       Bairro
                     </label>
@@ -1061,7 +1061,7 @@ export default function CheckoutPage() {
                       maxLength={
                         100
                       }
-                      className="mt-3 w-full border-b border-black/15 bg-transparent px-0 py-3 text-sm outline-none transition-colors focus:border-black"
+                      className="mt-3 w-full border-b border-black/30 bg-transparent px-0 py-3 text-sm outline-none transition-colors focus:border-black"
                     />
                   </div>
 
@@ -1069,7 +1069,7 @@ export default function CheckoutPage() {
                     <div>
                       <label
                         htmlFor="city"
-                        className="text-[9px] uppercase tracking-[0.3em] text-black/50"
+                        className="text-[9px] uppercase tracking-[0.3em] text-black/70"
                       >
                         Cidade
                       </label>
@@ -1090,14 +1090,14 @@ export default function CheckoutPage() {
                         maxLength={
                           100
                         }
-                        className="mt-3 w-full border-b border-black/15 bg-transparent px-0 py-3 text-sm outline-none transition-colors focus:border-black"
+                        className="mt-3 w-full border-b border-black/30 bg-transparent px-0 py-3 text-sm outline-none transition-colors focus:border-black"
                       />
                     </div>
 
                     <div>
                       <label
                         htmlFor="state"
-                        className="text-[9px] uppercase tracking-[0.3em] text-black/50"
+                        className="text-[9px] uppercase tracking-[0.3em] text-black/70"
                       >
                         UF
                       </label>
@@ -1122,7 +1122,7 @@ export default function CheckoutPage() {
                         maxLength={
                           2
                         }
-                        className="mt-3 w-full border-b border-black/15 bg-transparent px-0 py-3 text-sm uppercase outline-none transition-colors focus:border-black"
+                        className="mt-3 w-full border-b border-black/30 bg-transparent px-0 py-3 text-sm uppercase outline-none transition-colors focus:border-black"
                       />
                     </div>
                   </div>
@@ -1132,7 +1132,7 @@ export default function CheckoutPage() {
                   <div className="border border-black/10 p-5">
                     <div className="flex items-start justify-between gap-5">
                       <div>
-                        <p className="text-[9px] uppercase tracking-[0.3em] text-black/50">
+                        <p className="text-[9px] uppercase tracking-[0.3em] text-black/70">
                           Entrega
                         </p>
 
@@ -1160,7 +1160,7 @@ export default function CheckoutPage() {
                             )}
                           </>
                         ) : (
-                          <p className="mt-2 text-[10px] text-black/40">
+                          <p className="mt-2 text-[10px] text-black/55">
                             Consulte o frete para seu endereço.
                           </p>
                         )}
@@ -1206,7 +1206,7 @@ export default function CheckoutPage() {
 
               <div>
                 <div className="border-b border-black/10 pb-4">
-                  <p className="text-[9px] uppercase tracking-[0.3em] text-black/40">
+                  <p className="text-[9px] uppercase tracking-[0.3em] text-black/55">
                     03 · Pagamento
                   </p>
                 </div>
@@ -1223,7 +1223,7 @@ export default function CheckoutPage() {
                   <ShieldCheck
                     size={18}
                     strokeWidth={1.3}
-                    className="mt-0.5 shrink-0 text-black/50"
+                    className="mt-0.5 shrink-0 text-black/70"
                   />
 
                   <div>
@@ -1231,7 +1231,7 @@ export default function CheckoutPage() {
                       Checkout seguro
                     </p>
 
-                    <p className="mt-2 text-[10px] leading-5 text-black/40">
+                    <p className="mt-2 text-[10px] leading-5 text-black/55">
                       O pagamento será realizado com segurança através da InfinitePay após a confirmação dos seus dados.
                     </p>
                   </div>
@@ -1270,7 +1270,7 @@ export default function CheckoutPage() {
 
           <aside className="h-fit lg:sticky lg:top-24">
             <div className="border border-black/10 p-7 md:p-8">
-              <p className="text-[9px] uppercase tracking-[0.35em] text-black/40">
+              <p className="text-[9px] uppercase tracking-[0.35em] text-black/55">
                 Seu pedido
               </p>
 
@@ -1290,7 +1290,7 @@ export default function CheckoutPage() {
                           }
                         </p>
 
-                        <p className="mt-1 text-[8px] uppercase tracking-[0.2em] text-black/40">
+                        <p className="mt-1 text-[8px] uppercase tracking-[0.2em] text-black/55">
                           {
                             item.color
                           }{" "}
@@ -1319,7 +1319,7 @@ export default function CheckoutPage() {
 
               <div className="mt-5 border-t border-black/10 pt-5">
                 <div className="flex justify-between text-[10px]">
-                  <span className="text-black/45">
+                  <span className="text-black/60">
                     Subtotal
                   </span>
 
@@ -1331,7 +1331,7 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="mt-3 flex justify-between text-[10px]">
-                  <span className="text-black/45">
+                  <span className="text-black/60">
                     Frete
                   </span>
 
