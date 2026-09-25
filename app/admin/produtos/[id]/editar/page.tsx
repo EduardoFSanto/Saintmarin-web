@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 import {
