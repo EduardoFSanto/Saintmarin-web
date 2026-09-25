@@ -19,7 +19,7 @@ export function ProductPurchase({
   product,
   variants,
 }: ProductPurchaseProps) {
-  const { addItem } = useCart();
+  const { addItem, buyNow } = useCart();
   const router = useRouter();
 
   const colors = useMemo(
@@ -70,7 +70,7 @@ export function ProductPurchase({
       return;
     }
 
-    addItem({
+    buyNow({
       product,
       variant: selectedVariant,
     });
