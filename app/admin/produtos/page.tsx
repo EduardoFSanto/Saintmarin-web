@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import {
+  deactivateProduct,
   getCurrentUser,
   getProducts,
   type Product,
@@ -18,6 +19,40 @@ export default function AdminProductsPage() {
 
   const [loading, setLoading] =
     useState(true);
+
+  const [message, setMessage] = useState("");
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  async function handleDeactivate(product: Product) {
+    const confirmed = window.confirm(
+      `Desativar "${product.name}"? Ele deixará de aparecer na loja, mas os pedidos antigos serão preservados.`,
+    );
+
+    if (!confirmed) return;
+
+    setDeletingId(product.id);
+    setMessage("");
+
+    try {
+      await deactivateProduct(product.id);
+      setProducts((current) =>
+        current.map((item) =>
+          item.id === product.id
+            ? { ...item, active: false }
+            : item,
+        ),
+      );
+      setMessage("Produto desativado com sucesso.");
+    } catch (error) {
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "Não foi possível desativar o produto.",
+      );
+    } finally {
+      setDeletingId(null);
+    }
+  }
 
   useEffect(() => {
     async function load() {
@@ -76,6 +111,11 @@ export default function AdminProductsPage() {
       </header>
 
       <section className="mx-auto max-w-7xl px-6 py-10">
+        {message && (
+          <div className="mb-6 rounded-xl border border-neutral-200 bg-white px-5 py-4 text-sm text-neutral-700">
+            {message}
+          </div>
+        )}
         {products.length === 0 ? (
           <div className="rounded-2xl bg-white p-10 text-center">
             <h2 className="text-xl font-semibold">
@@ -116,7 +156,26 @@ export default function AdminProductsPage() {
                     </p>
                   </div>
 
-                  <span
+                  <div className="flex items-center gap-3">
+                    <Link
+                      href={`/admin/produtos/${product.id}/editar`}
+                      className="rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm font-medium hover:bg-neutral-50"
+                    >
+                      Editar
+                    </Link>
+
+                    {product.active && (
+                      <button
+                        type="button"
+                        onClick={() => handleDeactivate(product)}
+                        disabled={deletingId === product.id}
+                        className="rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-50 disabled:opacity-60"
+                      >
+                        {deletingId === product.id ? "Desativando..." : "Desativar"}
+                      </button>
+                    )}
+
+                    <span
                     className={
                       product.active
                         ? "rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700"
@@ -126,7 +185,8 @@ export default function AdminProductsPage() {
                     {product.active
                       ? "Ativo"
                       : "Inativo"}
-                  </span>
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
