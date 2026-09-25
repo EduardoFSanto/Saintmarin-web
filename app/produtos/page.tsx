@@ -90,6 +90,7 @@ export default async function ProductsPage() {
                   price={
                     product.priceInCents!
                   }
+                  image={product.imageUrl ?? undefined}
                 />
               ),
             )}
