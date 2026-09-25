@@ -19,8 +19,8 @@ import {
   type Product,
   type ProductImage,
   type ProductVariant,
-} from "../../../../lib/api";
-import { uploadImageToCloudinary } from "../../../../lib/cloudinary";
+} from "../../../../../lib/api";
+import { uploadImageToCloudinary } from "../../../../../lib/cloudinary";
 
 export default function EditProductPage() {
   const params = useParams<{ id: string }>();
