@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import {
+  getProductImages,
   getProductVariants,
   getProducts,
 } from "@/lib/api";
@@ -29,8 +30,10 @@ export default async function ProductPage({
     notFound();
   }
 
-  const variants =
-    await getProductVariants(product.id);
+  const [variants, productImages] = await Promise.all([
+    getProductVariants(product.id),
+    getProductImages(product.id),
+  ]);
 
   const availableVariants =
     variants.filter(
@@ -74,6 +77,18 @@ export default async function ProductPage({
                 <span className="text-[9px] uppercase tracking-[0.5em] text-black/20">
                   Saint Marin
                 </span>
+              </div>
+            )}
+            {productImages.length > 0 && (
+              <div className="mt-4 grid grid-cols-4 gap-3">
+                {productImages.map((image) => (
+                  <img
+                    key={image.id}
+                    src={image.imageUrl}
+                    alt={product.name}
+                    className="aspect-[4/5] w-full object-cover"
+                  />
+                ))}
               </div>
             )}
           </div>
