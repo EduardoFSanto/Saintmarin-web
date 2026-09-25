@@ -63,11 +63,19 @@ export default async function ProductPage({
         <div className="mt-10 grid gap-10 md:grid-cols-2 md:gap-16 lg:gap-24">
           {/* Imagem */}
           <div className="relative aspect-[4/5] overflow-hidden bg-[#ece9e3]">
-            <div className="flex h-full items-center justify-center">
-              <span className="text-[9px] uppercase tracking-[0.5em] text-black/20">
-                Saint Marin
-              </span>
-            </div>
+            {product.imageUrl ? (
+              <img
+                src={product.imageUrl}
+                alt={product.name}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex h-full items-center justify-center">
+                <span className="text-[9px] uppercase tracking-[0.5em] text-black/20">
+                  Saint Marin
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Informações */}

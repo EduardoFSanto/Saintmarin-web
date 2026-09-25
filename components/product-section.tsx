@@ -77,6 +77,10 @@ export async function ProductSection() {
                 price={
                   product.priceInCents!
                 }
+                image={
+                  product.imageUrl ??
+                  undefined
+                }
               />
             ),
           )}
