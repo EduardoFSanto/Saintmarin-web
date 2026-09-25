@@ -106,6 +106,23 @@ export default function AdminPage() {
             </p>
           </Link>
 
+          <Link
+            href="/admin/categorias"
+            className="rounded-2xl bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+          >
+            <p className="text-sm text-neutral-500">
+              Catálogo
+            </p>
+
+            <h2 className="mt-2 text-xl font-semibold">
+              Categorias
+            </h2>
+
+            <p className="mt-2 text-sm text-neutral-500">
+              Criar e organizar as categorias dos produtos.
+            </p>
+          </Link>
+
           <div className="rounded-2xl bg-white p-6 shadow-sm">
             <p className="text-sm text-neutral-500">
               Operação
