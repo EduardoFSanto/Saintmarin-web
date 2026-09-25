@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import type {
   Product,
@@ -19,6 +20,7 @@ export function ProductPurchase({
   variants,
 }: ProductPurchaseProps) {
   const { addItem } = useCart();
+  const router = useRouter();
 
   const colors = useMemo(
     () =>
@@ -62,6 +64,19 @@ export function ProductPurchase({
           selectedColor &&
         variant.size === selectedSize,
     );
+
+  function handleBuyNow() {
+    if (!selectedVariant) {
+      return;
+    }
+
+    addItem({
+      product,
+      variant: selectedVariant,
+    });
+
+    router.push("/checkout");
+  }
 
   function handleAddToCart() {
     if (!selectedVariant) {
@@ -176,17 +191,28 @@ export function ProductPurchase({
         </p>
       )}
 
-      {/* Botão */}
-      <button
-        type="button"
-        disabled={!selectedVariant}
-        onClick={handleAddToCart}
-        className="mt-8 w-full bg-black px-8 py-4 text-[9px] uppercase tracking-[0.35em] text-white transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-30"
-      >
-        {added
-          ? "Adicionado ao carrinho"
-          : "Adicionar ao carrinho"}
-      </button>
+      {/* Ações */}
+      <div className="mt-8 grid gap-3 sm:grid-cols-2">
+        <button
+          type="button"
+          disabled={!selectedVariant}
+          onClick={handleAddToCart}
+          className="w-full border border-black bg-transparent px-6 py-4 text-[9px] uppercase tracking-[0.3em] transition-colors hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+        >
+          {added
+            ? "Adicionado ao carrinho"
+            : "Adicionar ao carrinho"}
+        </button>
+
+        <button
+          type="button"
+          disabled={!selectedVariant}
+          onClick={handleBuyNow}
+          className="w-full bg-black px-6 py-4 text-[9px] uppercase tracking-[0.3em] text-white transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-30"
+        >
+          Comprar agora
+        </button>
+      </div>
     </div>
   );
 }
