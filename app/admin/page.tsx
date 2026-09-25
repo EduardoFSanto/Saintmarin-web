@@ -137,7 +137,10 @@ export default function AdminPage() {
             </p>
           </div>
 
-          <div className="rounded-2xl bg-white p-6 shadow-sm">
+          <Link
+            href="/admin/pedidos"
+            className="rounded-2xl bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+          >
             <p className="text-sm text-neutral-500">
               Vendas
             </p>
@@ -147,9 +150,9 @@ export default function AdminPage() {
             </h2>
 
             <p className="mt-2 text-sm text-neutral-500">
-              Acompanhar pedidos e pagamentos.
+              Acompanhar pedidos, clientes e pagamentos.
             </p>
-          </div>
+          </Link>
         </div>
       </section>
     </main>
