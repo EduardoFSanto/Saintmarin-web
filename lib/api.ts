@@ -351,6 +351,70 @@ export async function createProductVariant(
   return result.data;
 }
 
+
+export type UpdateProductInput = Partial<CreateProductInput>;
+
+export async function updateProduct(
+  id: string,
+  input: UpdateProductInput,
+): Promise<Product> {
+  const response = await fetch(`${API_URL}/products/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(input),
+  });
+
+  const result = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    throw new Error(
+      result?.error?.message ?? "Não foi possível atualizar o produto.",
+    );
+  }
+
+  return (result as ApiResponse<Product>).data;
+}
+
+export async function deactivateProduct(id: string): Promise<Product> {
+  const response = await fetch(`${API_URL}/products/${id}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  const result = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    throw new Error(
+      result?.error?.message ?? "Não foi possível desativar o produto.",
+    );
+  }
+
+  return (result as ApiResponse<Product>).data;
+}
+
+export async function updateProductVariant(
+  id: string,
+  input: Partial<CreateProductVariantInput>,
+): Promise<ProductVariant> {
+  const response = await fetch(`${API_URL}/products/variants/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(input),
+  });
+
+  const result = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    throw new Error(
+      result?.error?.message ?? "Não foi possível atualizar a variante.",
+    );
+  }
+
+  return (result as ApiResponse<ProductVariant>).data;
+}
+
 export type CreateCategoryInput = {
   name: string;
   slug: string;
