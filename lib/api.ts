@@ -201,6 +201,24 @@ export async function getCategories(): Promise<Category[]> {
   return result.data;
 }
 
+async function readApiError(response: Response): Promise<string> {
+  const text = await response.text();
+
+  try {
+    const json = JSON.parse(text) as {
+      error?: { message?: string };
+    };
+
+    if (json.error?.message) {
+      return json.error.message;
+    }
+  } catch {
+    // Keep the raw response below.
+  }
+
+  return text || "Resposta vazia do servidor.";
+}
+
 export async function login(
   email: string,
   password: string,
@@ -213,6 +231,7 @@ export async function login(
         "Content-Type": "application/json",
       },
       credentials: "include",
+      cache: "no-store",
       body: JSON.stringify({
         email,
         password,
@@ -221,8 +240,10 @@ export async function login(
   );
 
   if (!response.ok) {
+    const detail = await readApiError(response);
+
     throw new Error(
-      "E-mail ou senha inválidos.",
+      `Login falhou (HTTP ${response.status}): ${detail}`,
     );
   }
 
@@ -235,7 +256,7 @@ export async function login(
   return result.data.user;
 }
 
-export async function getCurrentUser(): Promise<AuthUser | null> {
+export async function getCurrentUser(): Promise<AuthUser> {
   const response = await fetch(
     `${API_URL}/auth/me`,
     {
@@ -245,7 +266,11 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
   );
 
   if (!response.ok) {
-    return null;
+    const detail = await readApiError(response);
+
+    throw new Error(
+      `Sessão inválida (HTTP ${response.status}): ${detail}`,
+    );
   }
 
   const result =
