@@ -26,7 +26,7 @@ export default function AdminPage() {
 
         if (!active) return;
 
-        if (currentUser.role !== "admin") {
+        if (!currentUser || currentUser.role !== "admin") {
           router.replace("/");
           return;
         }
