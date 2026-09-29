@@ -273,10 +273,31 @@ export async function getCurrentUser(): Promise<AuthUser> {
     );
   }
 
-  const result =
-    (await response.json()) as ApiResponse<AuthUser>;
+  const result = (await response.json()) as {
+    data?: AuthUser | { user?: AuthUser };
+  };
 
-  return result.data;
+  const data = result.data;
+
+  if (
+    data &&
+    "user" in data &&
+    data.user
+  ) {
+    return data.user;
+  }
+
+  if (
+    data &&
+    "role" in data &&
+    typeof data.role === "string"
+  ) {
+    return data;
+  }
+
+  throw new Error(
+    `Resposta inesperada de /auth/me: ${JSON.stringify(result)}`,
+  );
 }
 
 export async function logout(): Promise<void> {
