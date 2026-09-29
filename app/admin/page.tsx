@@ -15,6 +15,7 @@ export default function AdminPage() {
 
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const [authError, setAuthError] = useState("");
 
   useEffect(() => {
     let active = true;
@@ -25,11 +26,6 @@ export default function AdminPage() {
 
         if (!active) return;
 
-        if (!currentUser) {
-          router.replace("/admin/login");
-          return;
-        }
-
         if (currentUser.role !== "admin") {
           router.replace("/");
           return;
@@ -37,10 +33,15 @@ export default function AdminPage() {
 
         setUser(currentUser);
         setLoading(false);
-      } catch {
+      } catch (error) {
         if (!active) return;
 
-        router.replace("/admin/login");
+        setAuthError(
+          error instanceof Error
+            ? error.message
+            : "Erro desconhecido ao validar a sessão.",
+        );
+        setLoading(false);
       }
     }
 
@@ -65,6 +66,44 @@ export default function AdminPage() {
         <p className="text-neutral-500">
           Carregando painel...
         </p>
+      </main>
+    );
+  }
+
+  if (authError) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-neutral-950 px-6">
+        <div className="w-full max-w-2xl rounded-2xl bg-white p-8 shadow-xl">
+          <p className="text-sm font-semibold uppercase tracking-wider text-red-600">
+            Erro de autenticação
+          </p>
+
+          <h1 className="mt-2 text-2xl font-semibold text-neutral-950">
+            A sessão não pôde ser validada
+          </h1>
+
+          <pre className="mt-6 overflow-auto rounded-lg bg-neutral-100 p-4 text-sm text-neutral-800 whitespace-pre-wrap">
+            {authError}
+          </pre>
+
+          <div className="mt-6 flex gap-3">
+            <button
+              type="button"
+              onClick={() => window.location.reload()}
+              className="rounded-lg bg-neutral-950 px-4 py-2 text-sm font-medium text-white"
+            >
+              Tentar novamente
+            </button>
+
+            <button
+              type="button"
+              onClick={() => window.location.assign("/admin/login")}
+              className="rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium"
+            >
+              Voltar para login
+            </button>
+          </div>
+        </div>
       </main>
     );
   }
