@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { login } from "../../../lib/api";
+import { getCurrentUser, login } from "../../../lib/api";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -24,13 +24,27 @@ export default function AdminLoginPage() {
     try {
       await login(email, password);
 
-      router.push("/admin");
-      router.refresh();
-    } catch {
+      const currentUser = await getCurrentUser();
+
+      if (!currentUser) {
+        throw new Error(
+          "A sessão não foi criada corretamente.",
+        );
+      }
+
+      if (currentUser.role !== "admin") {
+        throw new Error(
+          "Este usuário não possui acesso administrativo.",
+        );
+      }
+
+      window.location.assign("/admin");
+    } catch (error) {
       setError(
-        "E-mail ou senha inválidos.",
+        error instanceof Error
+          ? error.message
+          : "Não foi possível entrar no painel.",
       );
-    } finally {
       setLoading(false);
     }
   }
@@ -105,9 +119,7 @@ export default function AdminLoginPage() {
             disabled={loading}
             className="w-full rounded-lg bg-neutral-950 px-4 py-3 font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {loading
-              ? "Entrando..."
-              : "Entrar"}
+            {loading ? "Entrando..." : "Entrar"}
           </button>
         </form>
       </div>
