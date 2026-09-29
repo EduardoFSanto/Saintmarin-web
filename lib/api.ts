@@ -274,12 +274,9 @@ export async function getCurrentUser(): Promise<AuthUser> {
   }
 
   const result =
-    (await response.json()) as ApiResponse<{
-      user: AuthUser;
-      expiresAt: string;
-    }>;
+    (await response.json()) as ApiResponse<AuthUser>;
 
-  return result.data.user;
+  return result.data;
 }
 
 export async function logout(): Promise<void> {
