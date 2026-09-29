@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { getCurrentUser, login } from "../../../lib/api";
+import { login } from "../../../lib/api";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -22,17 +22,9 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     try {
-      await login(email, password);
+      const user = await login(email, password);
 
-      const currentUser = await getCurrentUser();
-
-      if (!currentUser) {
-        throw new Error(
-          "A sessão não foi criada corretamente.",
-        );
-      }
-
-      if (currentUser.role !== "admin") {
+      if (user.role !== "admin") {
         throw new Error(
           "Este usuário não possui acesso administrativo.",
         );
