@@ -13,38 +13,50 @@ import {
 export default function AdminPage() {
   const router = useRouter();
 
-  const [user, setUser] =
-    useState<AuthUser | null>(null);
-
-  const [loading, setLoading] =
-    useState(true);
-
-  async function loadUser() {
-    const currentUser =
-      await getCurrentUser();
-
-    if (!currentUser) {
-      router.replace("/admin/login");
-      return;
-    }
-
-    if (currentUser.role !== "admin") {
-      router.replace("/");
-      return;
-    }
-
-    setUser(currentUser);
-    setLoading(false);
-  }
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadUser();
-  }, []);
+    let active = true;
+
+    async function loadUser() {
+      try {
+        const currentUser = await getCurrentUser();
+
+        if (!active) return;
+
+        if (!currentUser) {
+          router.replace("/admin/login");
+          return;
+        }
+
+        if (currentUser.role !== "admin") {
+          router.replace("/");
+          return;
+        }
+
+        setUser(currentUser);
+        setLoading(false);
+      } catch {
+        if (!active) return;
+
+        router.replace("/admin/login");
+      }
+    }
+
+    void loadUser();
+
+    return () => {
+      active = false;
+    };
+  }, [router]);
 
   async function handleLogout() {
-    await logout();
-    router.replace("/admin/login");
-    router.refresh();
+    try {
+      await logout();
+    } finally {
+      window.location.assign("/admin/login");
+    }
   }
 
   if (loading) {
@@ -93,14 +105,8 @@ export default function AdminPage() {
             href="/admin/produtos"
             className="rounded-2xl bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
           >
-            <p className="text-sm text-neutral-500">
-              Catálogo
-            </p>
-
-            <h2 className="mt-2 text-xl font-semibold">
-              Produtos
-            </h2>
-
+            <p className="text-sm text-neutral-500">Catálogo</p>
+            <h2 className="mt-2 text-xl font-semibold">Produtos</h2>
             <p className="mt-2 text-sm text-neutral-500">
               Cadastrar e gerenciar produtos e variantes.
             </p>
@@ -110,28 +116,16 @@ export default function AdminPage() {
             href="/admin/categorias"
             className="rounded-2xl bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
           >
-            <p className="text-sm text-neutral-500">
-              Catálogo
-            </p>
-
-            <h2 className="mt-2 text-xl font-semibold">
-              Categorias
-            </h2>
-
+            <p className="text-sm text-neutral-500">Catálogo</p>
+            <h2 className="mt-2 text-xl font-semibold">Categorias</h2>
             <p className="mt-2 text-sm text-neutral-500">
               Criar e organizar as categorias dos produtos.
             </p>
           </Link>
 
           <div className="rounded-2xl bg-white p-6 shadow-sm">
-            <p className="text-sm text-neutral-500">
-              Operação
-            </p>
-
-            <h2 className="mt-2 text-xl font-semibold">
-              Estoque
-            </h2>
-
+            <p className="text-sm text-neutral-500">Operação</p>
+            <h2 className="mt-2 text-xl font-semibold">Estoque</h2>
             <p className="mt-2 text-sm text-neutral-500">
               Controle de estoque e movimentações.
             </p>
@@ -141,14 +135,8 @@ export default function AdminPage() {
             href="/admin/pedidos"
             className="rounded-2xl bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
           >
-            <p className="text-sm text-neutral-500">
-              Vendas
-            </p>
-
-            <h2 className="mt-2 text-xl font-semibold">
-              Pedidos
-            </h2>
-
+            <p className="text-sm text-neutral-500">Vendas</p>
+            <h2 className="mt-2 text-xl font-semibold">Pedidos</h2>
             <p className="mt-2 text-sm text-neutral-500">
               Acompanhar pedidos, clientes e pagamentos.
             </p>
