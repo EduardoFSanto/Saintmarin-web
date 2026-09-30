@@ -71,6 +71,14 @@ export type OrderSummary = {
     email: string;
     phone: string | null;
   };
+  items: Array<{
+    id: string;
+    productName: string;
+    imageUrl: string | null;
+    size: string;
+    color: string;
+    quantity: number;
+  }>;
 };
 
 export type Order = OrderSummary & {
