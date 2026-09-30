@@ -50,6 +50,23 @@ export type Category = {
   createdAt: string;
 };
 
+export type OrderSummaryItem = {
+  id: string;
+  productName: string;
+  imageUrl: string | null;
+  size: string;
+  color: string;
+  quantity: number;
+};
+
+export type OrderItem = OrderSummaryItem & {
+  productVariantId: string;
+  sku: string;
+  unitPriceInCents: number;
+  totalInCents: number;
+  createdAt: string;
+};
+
 export type OrderSummary = {
   id: string;
   status: string;
@@ -71,30 +88,11 @@ export type OrderSummary = {
     email: string;
     phone: string | null;
   };
-  items: Array<{
-    id: string;
-    productName: string;
-    imageUrl: string | null;
-    size: string;
-    color: string;
-    quantity: number;
-  }>;
+  items: OrderSummaryItem[];
 };
 
-export type Order = OrderSummary & {
-  items: Array<{
-    id: string;
-    productVariantId: string;
-    productName: string;
-    imageUrl: string | null;
-    sku: string;
-    size: string;
-    color: string;
-    unitPriceInCents: number;
-    quantity: number;
-    totalInCents: number;
-    createdAt: string;
-  }>;
+export type Order = Omit<OrderSummary, "items"> & {
+  items: OrderItem[];
 };
 
 export type AuthUser = {
