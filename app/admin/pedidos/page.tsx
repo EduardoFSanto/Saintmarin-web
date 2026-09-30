@@ -126,7 +126,32 @@ export default function AdminOrdersPage() {
           {orders.length === 0 ? <div className="p-10 text-center text-sm text-neutral-500">Nenhum pedido recebido ainda.</div> : <div className="divide-y">
             {orders.map((order) => <button key={order.id} type="button" onClick={() => openOrder(order.id)} className="grid w-full gap-4 px-6 py-5 text-left transition hover:bg-neutral-50 md:grid-cols-[1fr_2fr_1fr_1fr_1fr]">
               <div><p className="text-xs text-neutral-400">Pedido</p><p className="mt-1 font-semibold">#{order.id.slice(0, 8).toUpperCase()}</p></div>
-              <div><p className="text-xs text-neutral-400">Cliente</p><p className="mt-1 font-medium">{order.customer.name}</p><p className="text-xs text-neutral-500">{order.customer.email}</p></div>
+              <div className="min-w-0">
+                <p className="text-xs text-neutral-400">Produtos</p>
+                <div className="mt-2 flex min-w-0 items-center gap-3">
+                  {order.items[0]?.imageUrl ? (
+                    <img
+                      src={order.items[0].imageUrl}
+                      alt={order.items[0].productName}
+                      className="h-12 w-10 shrink-0 rounded object-cover"
+                    />
+                  ) : (
+                    <div className="h-12 w-10 shrink-0 rounded bg-neutral-100" />
+                  )}
+                  <div className="min-w-0">
+                    <p className="truncate font-medium">
+                      {order.items[0]?.productName ?? "Produto não identificado"}
+                    </p>
+                    <p className="text-xs text-neutral-500">
+                      {order.items.length > 1
+                        ? `+ ${order.items.length - 1} outro(s)`
+                        : order.items[0]
+                          ? `${order.items[0].color} · ${order.items[0].size} · ${order.items[0].quantity}x`
+                          : "Sem itens"}
+                    </p>
+                  </div>
+                </div>
+              </div>
               <div><p className="text-xs text-neutral-400">Total</p><p className="mt-1 font-medium">{formatPrice(order.totalInCents)}</p></div>
               <div><p className="text-xs text-neutral-400">Status</p><p className="mt-1 font-medium">{statusLabel(order.status)}</p></div>
               <div><p className="text-xs text-neutral-400">Data</p><p className="mt-1 text-sm">{formatDate(order.createdAt)}</p></div>
