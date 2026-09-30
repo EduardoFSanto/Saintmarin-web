@@ -78,6 +78,7 @@ export type Order = OrderSummary & {
     id: string;
     productVariantId: string;
     productName: string;
+    imageUrl: string | null;
     sku: string;
     size: string;
     color: string;
