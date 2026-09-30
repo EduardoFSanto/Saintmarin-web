@@ -144,7 +144,60 @@ export default function AdminOrdersPage() {
               <div><p className="text-xs uppercase tracking-[0.2em] text-neutral-400">Status</p><p className="mt-2 font-medium">{statusLabel(selectedOrder.status)}</p><p className="mt-1 text-sm text-neutral-500">{formatDate(selectedOrder.createdAt)}</p></div>
             </div>
             <div><p className="text-xs uppercase tracking-[0.2em] text-neutral-400">Entrega</p><p className="mt-2 text-sm leading-6">{selectedOrder.shippingStreet}, {selectedOrder.shippingNumber}{selectedOrder.shippingComplement ? " — " + selectedOrder.shippingComplement : ""}<br />{selectedOrder.shippingNeighborhood}<br />{selectedOrder.shippingCity} - {selectedOrder.shippingState}<br />CEP {selectedOrder.shippingCep}</p></div>
-            <div><p className="text-xs uppercase tracking-[0.2em] text-neutral-400">Produtos</p><div className="mt-3 divide-y rounded-xl border">{selectedOrder.items.map((item) => <div key={item.id} className="flex items-center justify-between gap-4 px-4 py-4"><div><p className="text-sm font-medium">{item.productName}</p><p className="mt-1 text-xs text-neutral-500">{item.color} · {item.size} · {item.quantity}x</p></div><p className="text-sm font-medium">{formatPrice(item.totalInCents)}</p></div>)}</div></div>
+            <div>
+              <div className="flex items-center justify-between gap-4">
+                <p className="text-xs uppercase tracking-[0.2em] text-neutral-400">
+                  Produtos do pedido
+                </p>
+                <p className="text-xs text-neutral-400">
+                  {selectedOrder.items.length} {selectedOrder.items.length === 1 ? "item" : "itens"}
+                </p>
+              </div>
+
+              <div className="mt-3 divide-y overflow-hidden rounded-xl border bg-white">
+                {selectedOrder.items.map((item) => (
+                  <div key={item.id} className="flex gap-4 px-4 py-4 md:px-5">
+                    <div className="h-24 w-20 shrink-0 overflow-hidden rounded-lg bg-neutral-100">
+                      {item.imageUrl ? (
+                        <img
+                          src={item.imageUrl}
+                          alt={item.productName}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center text-[8px] uppercase tracking-wider text-neutral-400">
+                          Sem foto
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                      <p className="font-semibold text-neutral-950">
+                        {item.productName}
+                      </p>
+                      <p className="mt-1 text-xs text-neutral-500">
+                        SKU: {item.sku}
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-2 text-xs">
+                        <span className="rounded-full bg-neutral-100 px-3 py-1">
+                          Cor: {item.color}
+                        </span>
+                        <span className="rounded-full bg-neutral-100 px-3 py-1">
+                          Tamanho: {item.size}
+                        </span>
+                        <span className="rounded-full bg-neutral-100 px-3 py-1">
+                          Quantidade: {item.quantity}
+                        </span>
+                      </div>
+                    </div>
+
+                    <p className="shrink-0 text-sm font-semibold">
+                      {formatPrice(item.totalInCents)}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
             <div className="border-t pt-5"><div className="flex justify-between text-sm"><span className="text-neutral-500">Subtotal</span><span>{formatPrice(selectedOrder.subtotalInCents)}</span></div><div className="mt-2 flex justify-between text-sm"><span className="text-neutral-500">Frete</span><span>{formatPrice(selectedOrder.shippingInCents)}</span></div><div className="mt-4 flex justify-between border-t pt-4 text-lg font-semibold"><span>Total</span><span>{formatPrice(selectedOrder.totalInCents)}</span></div></div>
             <a href={whatsappUrl(selectedOrder)} target="_blank" rel="noreferrer" className="block w-full rounded-lg bg-[#25D366] px-6 py-4 text-center text-sm font-semibold text-white transition-opacity hover:opacity-90">Enviar pedido pelo WhatsApp</a>
             <p className="text-center text-xs leading-5 text-neutral-400">O WhatsApp abrirá uma conversa com o número cadastrado e a mensagem do pedido já preenchida.</p>
