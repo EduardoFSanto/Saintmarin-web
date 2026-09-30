@@ -7,6 +7,7 @@ import {
   getProducts,
 } from "@/lib/api";
 
+import { ProductGallery } from "@/components/product-gallery";
 import { ProductPurchase } from "@/components/product-purchase";
 
 type ProductPageProps = {
@@ -64,34 +65,11 @@ export default async function ProductPage({
         </Link>
 
         <div className="mt-10 grid gap-10 md:grid-cols-2 md:gap-16 lg:gap-24">
-          {/* Imagem */}
-          <div className="relative aspect-[4/5] overflow-hidden bg-[#ece9e3]">
-            {product.imageUrl ? (
-              <img
-                src={product.imageUrl}
-                alt={product.name}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="flex h-full items-center justify-center">
-                <span className="text-[9px] uppercase tracking-[0.5em] text-black/20">
-                  Saint Marin
-                </span>
-              </div>
-            )}
-            {productImages.length > 0 && (
-              <div className="mt-4 grid grid-cols-4 gap-3">
-                {productImages.map((image) => (
-                  <img
-                    key={image.id}
-                    src={image.imageUrl}
-                    alt={product.name}
-                    className="aspect-[4/5] w-full object-cover"
-                  />
-                ))}
-              </div>
-            )}
-          </div>
+          <ProductGallery
+            coverImage={product.imageUrl}
+            images={productImages}
+            productName={product.name}
+          />
 
           {/* Informações */}
           <div className="flex flex-col justify-center">
